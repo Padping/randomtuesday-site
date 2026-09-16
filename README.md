@@ -9,7 +9,9 @@ The site exists for three reasons:
 1. Apple requires a **publicly available, functional website on a domain associated
    with the organization** before it will approve an organization enrollment in the
    Apple Developer Program. A parked domain or a social link is explicitly rejected.
-2. Both stores require a **hosted privacy policy URL**.
+2. Both stores require a **hosted privacy policy URL**. For PadPing that is
+   padping.co/privacy; this site's policy covers the website and email, and
+   links there.
 3. Both stores require a **support URL** that a real person monitors.
 
 ## Structure
