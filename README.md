@@ -18,7 +18,8 @@ The site exists for three reasons:
 index.html      Company homepage
 padping.html    Product page
 support.html    Support + FAQ  (use as the App Store / Play "Support URL")
-privacy.html    Privacy policy (use as the "Privacy Policy URL")
+privacy.html    Company privacy policy (website and email). The app's policy,
+                and the stores' Privacy Policy URL, is padping.co/privacy
 terms.html      Terms of use
 404.html        Not-found page
 styles.css      All styles, light and dark
@@ -28,26 +29,18 @@ sitemap.xml     Five URLs
 favicon.svg     Wordmark mark
 ```
 
-## Before this goes live — required edits
+## Legal name and address
 
-Every placeholder is in `[SQUARE BRACKETS]`. Find them all with:
+The placeholders are filled in. Every page uses the same strings, which must
+keep matching the D&B record exactly:
 
-```bash
-grep -rn "\[[A-Z ,]*\]" --include="*.html" .
-```
+- RANDOM TUESDAY LLC
+- 187 E Lake Cove Cir, Saratoga Springs, UT 84045-4742, United States
 
-| Placeholder | Replace with | Must match |
-|---|---|---|
-| `[LEGAL ENTITY NAME]` | Registered legal name of the entity | Your D&B record, **exactly** — including the suffix and punctuation |
-| `[STREET ADDRESS]` | Registered business street address | Your D&B record |
-| `[CITY, STATE ZIP]` | City, state, ZIP | Your D&B record |
-| `[STATE]` / `[COUNTY, STATE]` | Governing law and venue in `terms.html` | Where the entity is registered |
-
-This matters more than it looks: Apple and Google both validate organization
-details against Dun & Bradstreet, and the address on your D-U-N-S record is
-published on your App Store product page under EU DSA trader rules. If the footer
-here says something different from what you type into the consoles, it invites a
-manual review on both platforms.
+Apple and Google both validate organization details against Dun & Bradstreet,
+and the address on your D-U-N-S record is published on your App Store product
+page under EU DSA trader rules. If the site says something different from what
+you type into the consoles, it invites a manual review on both platforms.
 
 ### Domain
 
@@ -55,8 +48,12 @@ The site is written for **randomtuesday.app**. `randomtuesday.com` was already
 registered (Namecheap, parked, since 2014). To use a different domain:
 
 ```bash
-grep -rl "randomtuesday.app" . | xargs sed -i '' 's/randomtuesday\.app/YOURDOMAIN/g'   # macOS
+grep -rl "randomtuesday.app" --include="*.html" --include="*.xml" --include="*.txt" . \
+  | xargs sed -i '' 's/randomtuesday\.app/YOURDOMAIN/g'   # macOS sed
 ```
+
+padping.co links to randomtuesday.app for support and terms, so update that
+repo too. On Linux, drop the `''` after `-i`.
 
 Then update `sitemap.xml` and the `og:url` / `canonical` tags, which the same
 replacement covers.
@@ -69,6 +66,9 @@ These need to exist and be monitored before you point a store listing at them:
 - `support@` — App Store / Play support URL destination
 - `privacy@` — privacy policy contact
 - `security@` — vulnerability reports
+
+padping.co also uses `feedback@padping.co` for PadPing privacy questions and
+beta replies. It must exist and be monitored too.
 
 A single Google Workspace mailbox with aliases covers all four.
 
@@ -100,14 +100,18 @@ Netlify auto-deploys on every push to the default branch.
 
 ## Keeping the privacy policy true
 
-The policy currently states that PadPing collects nothing and transmits nothing.
-That is accurate for the build as it stands. **If analytics ship in v1** — decision
-D1/D2 in `claude/launch-plan.md` in the PadPing project — this policy must be
-updated before submission, and the App Store privacy labels and Play Data safety
-form must match it. A privacy policy that undersells what the app actually does is
-a rejection risk on both stores and a trust problem that outlives the rejection.
+This site's policy covers the website and email only. PadPing's policy lives at
+padping.co/privacy (the `padping-landing` repo) and must match
+`docs/data-inventory.md` in the app repo and the store forms (D2, decided 14
+September 2026: PostHog usage analytics ship in v1, behaviour only, never
+content). If a new app ships, give it its own policy and link it from the "Our
+apps" section.
+
+`netlify.toml` returns 404 for `/README.md` and `/AUDIT.md`, because the publish
+directory is the repo root. Any new non-page file at the root needs the same
+rule.
 
 ## Licence
 
-© 2026 [LEGAL ENTITY NAME]. All rights reserved. Not open source; published here for
+© 2026 RANDOM TUESDAY LLC. All rights reserved. Not open source; published here for
 deployment convenience.
