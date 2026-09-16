@@ -213,7 +213,7 @@ section { padding-block: clamp(40px, 6vw, 64px); }
 
 .meta-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .meta-list li { display: flex; gap: 10px; color: var(--ink-soft); font-size: 0.9375rem; }
-.meta-list li::before { content: "—"; color: var(--ink-faint); flex: none; }
+.meta-list li::before { content: "\00B7"; color: var(--ink-faint); flex: none; }
 
 /* ---------- contact ---------- */
 
